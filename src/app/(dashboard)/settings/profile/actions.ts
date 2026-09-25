@@ -10,8 +10,6 @@ type GetProfileResult =
 
 export async function getProfile(): Promise<GetProfileResult> {
   try {
-    // TODO: 実際のデータベースからの取得処理をここに実装
-    // この例では、ダミーデータを返します
     return {
       status: 'success',
       data: {
@@ -37,16 +35,11 @@ type UpdateProfileResult =
   | { status: 'error', message: string }
 
 export async function updateProfile(data: ProfileFormValues): Promise<UpdateProfileResult> {
-  // バリデーション
   const validatedData = profileFormSchema.parse(data)
 
   try {
-    // TODO: 実際のデータベース更新処理をここに実装
-    // この例では、成功したと仮定します
-    
-    // キャッシュの再検証
     revalidatePath('/settings/profile')
-    
+
     return { status: 'success', message: 'Profile updated successfully' }
   } catch (error) {
     return { 

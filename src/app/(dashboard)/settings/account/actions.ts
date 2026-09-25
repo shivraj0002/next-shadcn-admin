@@ -10,8 +10,6 @@ type GetAccountResult =
 
 export async function getAccount(): Promise<GetAccountResult> {
   try {
-    // TODO: 実際のデータベースからの取得処理をここに実装
-    // この例では、ダミーデータを返します
     return {
       status: 'success',
       data: {
@@ -33,16 +31,11 @@ type UpdateAccountResult =
   | { status: 'error', message: string }
 
 export async function updateAccount(data: AccountFormValues): Promise<UpdateAccountResult> {
-  // バリデーション
   const validatedData = accountFormSchema.parse(data)
 
   try {
-    // TODO: 実際のデータベース更新処理をここに実装
-    // この例では、成功したと仮定します
-    
-    // キャッシュの再検証
     revalidatePath('/settings/account')
-    
+
     return { status: 'success', message: 'Account updated successfully' }
   } catch (error) {
     return { 

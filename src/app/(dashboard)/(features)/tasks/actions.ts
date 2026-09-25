@@ -3,7 +3,6 @@
 import { revalidatePath } from 'next/cache'
 import { Task, taskSchema } from './data/schema'
 
-// メモリ内データストア（実際のアプリケーションではデータベースを使用）
 let tasks: Task[] = []
 
 export async function getTasks() {
@@ -21,7 +20,7 @@ export async function createTask(formData: FormData) {
 
   const validatedData = taskSchema.parse(rawData)
   tasks.push(validatedData)
-  
+
   revalidatePath('/tasks')
   return { message: 'Task created successfully' }
 }
@@ -37,7 +36,7 @@ export async function updateTask(taskId: string, formData: FormData) {
 
   const validatedData = taskSchema.parse(rawData)
   const index = tasks.findIndex(task => task.id === taskId)
-  
+
   if (index === -1) {
     throw new Error('Task not found')
   }
@@ -49,7 +48,7 @@ export async function updateTask(taskId: string, formData: FormData) {
 
 export async function deleteTask(taskId: string) {
   const index = tasks.findIndex(task => task.id === taskId)
-  
+
   if (index === -1) {
     throw new Error('Task not found')
   }
@@ -59,7 +58,6 @@ export async function deleteTask(taskId: string) {
   return { message: 'Task deleted successfully' }
 }
 
-// 初期データのロード
 import { faker } from '@faker-js/faker'
 
 const statuses = ['in progress', 'backlog', 'todo', 'canceled', 'done'] as const

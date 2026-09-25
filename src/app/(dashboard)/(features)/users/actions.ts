@@ -4,12 +4,10 @@ import { revalidatePath } from 'next/cache'
 import { User, userSchema } from './data/schema'
 import { users } from './data/users'
 
-// Get all users
 export async function getUsers() {
   return users
 }
 
-// Create new user
 export async function createUser(formData: FormData) {
   const rawData = {
     id: `USER-${Math.floor(Math.random() * 10000)}`,
@@ -26,12 +24,11 @@ export async function createUser(formData: FormData) {
 
   const validatedData = userSchema.parse(rawData)
   users.push(validatedData)
-  
+
   revalidatePath('/users')
   return { message: 'User created successfully' }
 }
 
-// Update user
 export async function updateUser(id: string, formData: FormData) {
   const index = users.findIndex(user => user.id === id)
   if (index === -1) {
@@ -51,12 +48,11 @@ export async function updateUser(id: string, formData: FormData) {
 
   const validatedData = userSchema.parse(rawData)
   users[index] = validatedData
-  
+
   revalidatePath('/users')
   return { message: 'User updated successfully' }
 }
 
-// Delete user
 export async function deleteUser(id: string) {
   const index = users.findIndex(user => user.id === id)
   if (index === -1) {
@@ -64,12 +60,11 @@ export async function deleteUser(id: string) {
   }
 
   users.splice(index, 1)
-  
+
   revalidatePath('/users')
   return { message: 'User deleted successfully' }
 }
 
-// Invite user
 export async function inviteUser(formData: FormData) {
   const rawData = {
     id: `USER-${Math.floor(Math.random() * 10000)}`,
@@ -86,7 +81,7 @@ export async function inviteUser(formData: FormData) {
 
   const validatedData = userSchema.parse(rawData)
   users.push(validatedData)
-  
+
   revalidatePath('/users')
   return { message: 'User invited successfully' }
 }

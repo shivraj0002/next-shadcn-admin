@@ -4,7 +4,6 @@ import { revalidatePath } from 'next/cache'
 import { apps as initialApps } from './data/apps'
 import { App, appSchema } from './data/schema'
 
-// メモリ内でのデータ管理（実際のアプリケーションではデータベースを使用する）
 let apps = initialApps.map((app, index) => ({
   ...app,
   id: `APP-${index + 1}`,
@@ -20,7 +19,6 @@ export async function connectApp(id: string) {
     throw new Error('App not found')
   }
 
-  // アプリの接続状態を更新
   apps[appIndex] = {
     ...apps[appIndex],
     connected: true,
@@ -36,7 +34,6 @@ export async function disconnectApp(id: string) {
     throw new Error('App not found')
   }
 
-  // アプリの接続状態を更新
   apps[appIndex] = {
     ...apps[appIndex],
     connected: false,
