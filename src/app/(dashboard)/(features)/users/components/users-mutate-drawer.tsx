@@ -24,7 +24,7 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet'
 import { SelectDropdown } from '@/components/select-dropdown'
-import { User, UserRole, UserStatus } from '../data/schema'
+import { User } from '../data/schema'
 import { createUser, updateUser } from '../actions'
 import { userTypes } from '../data/data'
 

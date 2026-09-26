@@ -2,9 +2,9 @@
 
 import { revalidatePath } from 'next/cache'
 import { apps as initialApps } from './data/apps'
-import { App, appSchema } from './data/schema'
+import { App } from './data/schema'
 
-let apps = initialApps.map((app, index) => ({
+const apps = initialApps.map((app, index) => ({
   ...app,
   id: `APP-${index + 1}`,
 }))

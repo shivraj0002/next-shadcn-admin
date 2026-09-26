@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { User, userSchema } from './data/schema'
+import { userSchema } from './data/schema'
 import { users } from './data/users'
 
 export async function getUsers() {

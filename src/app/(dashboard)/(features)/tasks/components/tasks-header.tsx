@@ -6,7 +6,7 @@ import useDialogState from '@/hooks/use-dialog-state'
 import { TasksDialogType } from '../context/tasks-context'
 
 export function TasksHeader() {
-  const [open, setOpen] = useDialogState<TasksDialogType>(null)
+  const [, setOpen] = useDialogState<TasksDialogType>(null)
 
   return (
     <>
