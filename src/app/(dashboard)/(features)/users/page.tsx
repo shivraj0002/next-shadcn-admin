@@ -28,7 +28,6 @@ export default function Page() {
     updateUsers()
   }, [])
 
-  // Local states
   const [currentRow, setCurrentRow] = useState<User | null>(null)
   const [open, setOpen] = useDialogState<UsersDialogType>(null)
 

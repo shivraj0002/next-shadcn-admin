@@ -26,7 +26,6 @@ export default function Page() {
     updateTasks()
   }, [])
 
-  // Local states
   const [currentRow, setCurrentRow] = useState<Task | null>(null)
   const [open, setOpen] = useDialogState<TasksDialogType>(null)
 

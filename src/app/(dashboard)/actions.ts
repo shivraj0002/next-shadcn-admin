@@ -1,7 +1,6 @@
 'use server'
 
 export async function getOverviewData() {
-  // TODO: Implement actual API call
   return Array.from({ length: 12 }, (_, i) => ({
     name: new Date(0, i).toLocaleString('default', { month: 'short' }),
     total: Math.floor(Math.random() * 5000) + 1000,
@@ -9,7 +8,6 @@ export async function getOverviewData() {
 }
 
 export async function getRecentSales() {
-  // TODO: Implement actual API call
   return [
     {
       id: '1',

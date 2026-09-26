@@ -10,8 +10,6 @@ type GetNotificationsResult =
 
 export async function getNotifications(): Promise<GetNotificationsResult> {
   try {
-    // TODO: 実際のデータベースからの取得処理をここに実装
-    // この例では、ダミーデータを返します
     return {
       status: 'success',
       data: {
@@ -36,14 +34,9 @@ type UpdateNotificationsResult =
   | { status: 'error', message: string }
 
 export async function updateNotifications(data: NotificationsFormValues): Promise<UpdateNotificationsResult> {
-  // バリデーション
   const validatedData = notificationsFormSchema.parse(data)
 
   try {
-    // TODO: 実際のデータベース更新処理をここに実装
-    // この例では、成功したと仮定します
-    
-    // キャッシュの再検証
     revalidatePath('/settings/notifications')
     
     return { status: 'success', message: 'Notification settings updated successfully' }

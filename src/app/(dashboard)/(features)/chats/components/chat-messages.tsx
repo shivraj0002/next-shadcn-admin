@@ -10,7 +10,6 @@ type ChatMessagesProps = {
 }
 
 export function ChatMessages({ messages }: ChatMessagesProps) {
-  // メッセージをグループ化
   const groupedMessages = messages.reduce(
     (acc: Record<string, Message[]>, obj) => {
       const key = format(new Date(obj.timestamp), 'd MMM, yyyy')
