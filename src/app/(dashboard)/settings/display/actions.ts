@@ -1,6 +1,5 @@
 'use server'
 
-import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { displayFormSchema, type DisplayFormValues } from './schema'
 
@@ -29,7 +28,7 @@ type UpdateDisplayResult =
   | { status: 'error', message: string }
 
 export async function updateDisplay(data: DisplayFormValues): Promise<UpdateDisplayResult> {
-  const validatedData = displayFormSchema.parse(data)
+  displayFormSchema.parse(data)
 
   try {
     revalidatePath('/settings/display')

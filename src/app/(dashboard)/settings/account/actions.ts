@@ -1,6 +1,5 @@
 'use server'
 
-import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { accountFormSchema, type AccountFormValues } from './schema'
 
@@ -31,7 +30,7 @@ type UpdateAccountResult =
   | { status: 'error', message: string }
 
 export async function updateAccount(data: AccountFormValues): Promise<UpdateAccountResult> {
-  const validatedData = accountFormSchema.parse(data)
+  accountFormSchema.parse(data)
 
   try {
     revalidatePath('/settings/account')

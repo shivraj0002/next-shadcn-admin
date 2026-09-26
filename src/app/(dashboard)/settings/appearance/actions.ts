@@ -1,6 +1,5 @@
 'use server'
 
-import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { appearanceFormSchema, type AppearanceFormValues } from './schema'
 
@@ -30,7 +29,7 @@ type UpdateAppearanceResult =
   | { status: 'error', message: string }
 
 export async function updateAppearance(data: AppearanceFormValues): Promise<UpdateAppearanceResult> {
-  const validatedData = appearanceFormSchema.parse(data)
+  appearanceFormSchema.parse(data)
 
   try {
     revalidatePath('/settings/appearance')

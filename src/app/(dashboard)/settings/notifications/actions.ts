@@ -1,6 +1,5 @@
 'use server'
 
-import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { notificationsFormSchema, type NotificationsFormValues } from './schema'
 
@@ -34,7 +33,7 @@ type UpdateNotificationsResult =
   | { status: 'error', message: string }
 
 export async function updateNotifications(data: NotificationsFormValues): Promise<UpdateNotificationsResult> {
-  const validatedData = notificationsFormSchema.parse(data)
+  notificationsFormSchema.parse(data)
 
   try {
     revalidatePath('/settings/notifications')

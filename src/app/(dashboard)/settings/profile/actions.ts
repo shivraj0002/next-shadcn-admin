@@ -1,6 +1,5 @@
 'use server'
 
-import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { profileFormSchema, type ProfileFormValues } from './schema'
 
@@ -35,7 +34,7 @@ type UpdateProfileResult =
   | { status: 'error', message: string }
 
 export async function updateProfile(data: ProfileFormValues): Promise<UpdateProfileResult> {
-  const validatedData = profileFormSchema.parse(data)
+  profileFormSchema.parse(data)
 
   try {
     revalidatePath('/settings/profile')
