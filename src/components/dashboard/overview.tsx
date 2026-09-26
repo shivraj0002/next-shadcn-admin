@@ -2,7 +2,6 @@
 
 import { Suspense, useEffect, useState } from 'react'
 import { OverviewChart } from './overview-chart'
-import { Card } from '../ui/card'
 import { getOverviewData } from '../../app/(dashboard)/actions'
 
 export function Overview() {
