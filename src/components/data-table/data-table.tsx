@@ -23,9 +23,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { cn } from '@/lib/utils'
 import { DataTablePagination } from '@/components/data-table/data-table-pagination'
 import { DataTableToolbar } from './data-table-toolbar'
 import { FilterConfig } from './data-table-toolbar'
+
+type ColumnMeta = { className?: string }
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -35,7 +38,7 @@ interface DataTableProps<TData, TValue> {
   filters?: FilterConfig[]
   defaultVisibility?: VisibilityState
   responsiveColumns?: {
-    [key: string]: number // breakpoint width
+    [key: string]: number
   }
 }
 
@@ -51,7 +54,6 @@ export function DataTable<TData, TValue>({
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>(defaultVisibility)
 
-  // Apply responsive columns on client-side only
   React.useEffect(() => {
     if (typeof window !== 'undefined' && Object.keys(responsiveColumns).length > 0) {
       setColumnVisibility(prev => {
@@ -66,7 +68,6 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [sorting, setSorting] = React.useState<SortingState>([])
 
-  // Handle window resize
   React.useEffect(() => {
     if (typeof window !== 'undefined' && Object.keys(responsiveColumns).length > 0) {
       const handleResize = () => {
@@ -123,7 +124,15 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} colSpan={header.colSpan}>
+                    <TableHead
+                      key={header.id}
+                      colSpan={header.colSpan}
+                      className={cn(
+                        'sticky top-0 z-20 bg-background',
+                        (header.column.columnDef.meta as ColumnMeta | undefined)
+                          ?.className
+                      )}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -142,9 +151,16 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
+                  className='group/row'
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      className={
+                        (cell.column.columnDef.meta as ColumnMeta | undefined)
+                          ?.className
+                      }
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

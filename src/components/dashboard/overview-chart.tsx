@@ -1,6 +1,7 @@
 'use client'
 
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import { useEffect, useRef, useState } from 'react'
+import { Bar, BarChart, XAxis, YAxis } from 'recharts'
 
 interface OverviewChartProps {
   data: Array<{
@@ -10,9 +11,27 @@ interface OverviewChartProps {
 }
 
 export function OverviewChart({ data }: OverviewChartProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [width, setWidth] = useState(0)
+
+  // ResponsiveContainer re-rendered the whole tree on every animation frame
+  // while the sidebar was transitioning, so measure the box ourselves and
+  // hand recharts a concrete width instead.
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    const observer = new ResizeObserver((entries) => {
+      setWidth(entries[0].contentRect.width)
+    })
+    observer.observe(el)
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <ResponsiveContainer width="100%" height={350}>
-      <BarChart data={data}>
+    <div ref={containerRef}>
+      <BarChart width={width} height={350} data={data}>
         <XAxis
           dataKey="name"
           stroke="#888888"
@@ -34,6 +53,6 @@ export function OverviewChart({ data }: OverviewChartProps) {
           className="fill-primary"
         />
       </BarChart>
-    </ResponsiveContainer>
+    </div>
   )
 }

@@ -3,7 +3,7 @@
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
 import { SearchProvider } from '@/context/search-context'
-import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/components/layout/app-sidebar'
 import { cn } from '@/lib/utils'
 
@@ -32,7 +32,8 @@ export default function DashboardLayout({
                   'max-w-full w-full ml-auto',
                   'peer-data-[state=collapsed]:w-[calc(100%-var(--sidebar-width-icon)-1rem)]',
                   'peer-data-[state=expanded]:w-[calc(100%-var(--sidebar-width))]',
-                  'transition-[width] ease-linear duration-200',
+                  'transition-[width,transform] ease-linear duration-200',
+                  'will-change-transform',
                   'h-svh flex flex-col',
                   'group-data-[scroll-locked=1]/body:h-full',
                   'group-data-[scroll-locked=1]/body:has-[main.fixed-main]:h-svh'

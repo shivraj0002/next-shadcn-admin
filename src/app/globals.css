@@ -80,30 +80,13 @@ body {
   /* styles.css */
   .CollapsibleContent {
     overflow: hidden;
+    transition: all 300ms ease-out;
   }
   .CollapsibleContent[data-state='open'] {
-    animation: slideDown 300ms ease-out;
+    height: auto;
   }
   .CollapsibleContent[data-state='closed'] {
-    animation: slideUp 300ms ease-out;
-  }
-
-  @keyframes slideDown {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-collapsible-content-height);
-    }
-  }
-
-  @keyframes slideUp {
-    from {
-      height: var(--radix-collapsible-content-height);
-    }
-    to {
-      height: 0;
-    }
+    height: 0;
   }
 
   /* Prevent focus zoom on mobile devices */

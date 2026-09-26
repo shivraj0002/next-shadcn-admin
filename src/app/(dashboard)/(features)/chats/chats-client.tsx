@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import type { Conversation } from './data/schema'
-import { searchConversations, sendMessage } from './actions'
+import { sendMessage } from './actions'
 import { ChatSidebar } from './components/chat-sidebar'
 import { ChatHeader } from './components/chat-header'
 import { ChatMessages } from './components/chat-messages'
@@ -19,18 +19,18 @@ export function ChatsClient({ initialConversations }: ChatsClientProps) {
   const [selectedUser, setSelectedUser] = useState<Conversation>(initialConversations[0])
   const [mobileSelectedUser, setMobileSelectedUser] = useState<Conversation | null>(null)
 
-  // 検索処理
   const handleSearch = async (query: string) => {
     setSearch(query)
-    if (query.trim()) {
-      const results = await searchConversations(query)
-      setConversations(results)
-    } else {
+    if (!query.trim()) {
       setConversations(initialConversations)
+      return
     }
+
+    const response = await fetch(`/api/chats/search?q=${encodeURIComponent(query)}`)
+    const { results } = await response.json()
+    setConversations(results)
   }
 
-  // メッセージ送信処理
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
@@ -45,14 +45,12 @@ export function ChatsClient({ initialConversations }: ChatsClientProps) {
       timestamp,
     }
     
-    // 楽観的更新
     const updatedSelectedUser = {
       ...selectedUser,
       messages: [newMessage, ...selectedUser.messages]
     }
     setSelectedUser(updatedSelectedUser)
 
-    // 会話リストを更新
     const updatedConversations = conversations.map(conv => {
       if (conv.id === selectedUser.id) {
         return {
@@ -69,7 +67,6 @@ export function ChatsClient({ initialConversations }: ChatsClientProps) {
       event.currentTarget.reset()
     } catch (error) {
       console.error('Failed to send message:', error)
-      // エラー時は元の状態に戻す
       setSelectedUser(selectedUser)
       setConversations(conversations)
     }
